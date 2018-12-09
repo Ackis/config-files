@@ -1,0 +1,14 @@
+[Unit]
+Description=Tautulli/PlexPy - Stats for Plex Media Server usage
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+ExecStart=/opt/plexpy/PlexPy.py --quiet --daemon --nolaunch --config /opt/plexpy/config.ini --datadir /opt/plexpy
+GuessMainPID=no
+Type=forking
+User=tautulli
+Group=tautulli
+
+[Install]
+WantedBy=multi-user.target
