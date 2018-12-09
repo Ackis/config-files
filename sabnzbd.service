@@ -1,0 +1,13 @@
+[Unit]
+Description=Sabnzbd
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=sabnzbd
+Group=sabnzbd
+ExecStart=/usr/bin/sabnzbdplus -f /home/sabnzbd/sabnzbd.ini -s 192.168.0.199:9090 -d -l 2
+Type=forking
+
+[Install]
+WantedBy=multi-user.target

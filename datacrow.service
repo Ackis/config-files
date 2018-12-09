@@ -1,0 +1,14 @@
+[Unit]
+Description=DataCrow
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/datacrow
+User=datacrow
+Group=datacrow
+Restart=on-failure
+RestartSec=4 90
+ExecStart=/usr/lib/jvm/java-10-oracle/bin/java -Xmx2048M -jar /opt/datacrow/datacrow-server.jar -userdir:/usr/share/datacrow-database -dir:/opt/datacrow -port:35000 -imageserverport:35001 -webserverport:35002 -ip:192.168.0.199  -credentials:SA/pAgqMfnzvv9GzxzuAsG1
+
+[Install]
+WantedBy=multi-user.target

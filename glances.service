@@ -1,0 +1,13 @@
+[Unit]
+Description=Glances
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+User=glances
+#WorkingDirectory=/opt/glances
+ExecStart=/usr/bin/glances -d -B 192.168.0.199 --config /etc/glances/glances.conf -p 61208 -w
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

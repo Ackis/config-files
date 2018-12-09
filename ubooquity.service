@@ -1,0 +1,15 @@
+[Unit]
+Description=Ubooquity
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+User=ubooquity
+WorkingDirectory=/opt/ubooquity
+#ExecStart=/usr/bin/java -Xms1536M -Xmx2048M -jar /opt/ubooquity/Ubooquity.jar -port 8082 -webadmin -headless
+#ExecStart=/usr/lib/jvm/java-10-oracle/bin/java -Xms1536M -Xmx2048M -jar /opt/ubooquity/Ubooquity.jar --libraryport 8082 --remoteadmin --headless --adminport 8083
+ExecStart=/usr/lib/jvm/java-10-oracle/bin/java -Xms1536M -Xmx2048M -jar /opt/ubooquity/Ubooquity.jar --headless
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

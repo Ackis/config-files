@@ -1,0 +1,21 @@
+[Unit]
+Description=Minecraft Server
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/minecraft
+User=minecraft
+Group=minecraft
+#StandardOutput=tty, StandardError=tty
+#KillSignal=Int
+Restart=on-failure
+RestartSec=4 90
+ExecStart=/usr/bin/java -Xms1536M -Xmx2048M -jar /opt/minecraft/minecraft_server.jar nogui
+
+#ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "say SERVER SHUTTING DOWN. Saving map..."\\015'
+#ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "save-all"\\015'
+#ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "stop"\\015'
+#ExecStop=/bin/sleep 2
+
+[Install]
+WantedBy=multi-user.target

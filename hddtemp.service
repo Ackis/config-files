@@ -1,0 +1,11 @@
+[Unit]
+Description=HDD Temp
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/hddtemp -dF -l 192.168.0.199 -p 7634 /dev/sda /dev/sdb /dev/sdc /dev/sde /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh /dev/sdi /dev/sdj /dev/sdk
+#ExecStart=/usr/sbin/hddtemp -dF -l 192.168.0.199 -p 7634 /dev/sd[abcdefghijk]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
