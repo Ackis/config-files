@@ -1,1 +1,24 @@
-/lib/systemd/system/calibre.service
+[Unit]
+Description=Calibre eBook Server
+Documentation=https://www.digitalocean.com/community/tutorials/how-to-create-a-calibre-ebook-server-on-ubuntu-14-04
+After=network.target network-online.target
+
+[Service]
+Type=forking
+User=calibre
+Group=calibre
+PIDFile=/var/run/calibre/calibre-server.pid
+RuntimeDirectory=calibre
+RuntimeDirectoryMode=0750
+ExecStart=/opt/calibre/calibre-server \
+	--daemonize \
+	--max-opds-items=100 \
+	--max-opds-ungrouped-items=100 \
+	--pidfile="/opt/calibre/.config/calibre/calibre.pid"
+	--port=8080 \
+	--listen-on=192.168.0.199 \
+	--log="/var/log/mediaservers/calibre/calibre.log" \
+	"/media/eBooks/"
+
+[Install]
+WantedBy=multi-user.target 
