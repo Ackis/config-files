@@ -6,6 +6,9 @@ address=/pasula-dns-pi/192.168.0.200/
 
 # Web servers
 address=/home.ackis.duckdns.org/192.168.0.199
+address=/home.local/192.168.0.199
+address=/home/192.168.0.199
+
 address=/ackis.duckdns.org/192.168.0.199
 
 # Media Streaming Related
@@ -25,20 +28,28 @@ address=/denon.local/192.168.0.106
 address=/denon.ackis.duckdns.org/192.168.0.106
 address=/denon/192.168.0.106
 
-address=/chromecast.local/192.168.0.110
-address=/chromecast.ackis.duckdns.org/192.168.0.110
-address=/chromecast/192.168.0.110
-
 # LAN Servers
 address=/mail.local/192.168.0.199
 address=/mail.ackis.duckdns.org/192.168.0.199
 address=/mail/192.168.0.199
 
+address=/monit.local/192.168.0.199
+address=/monit.ackis.duckdns.org/192.168.0.199
+address=/monit/192.168.0.199
+
 address=/ntp.local/192.168.0.199
 address=/ntp.ackis.duckdns.org/192.168.0.199
 address=/ntp/192.168.0.199
 
+address=/pihole.local/192.168.0.200
+address=/pihole.ackis.duckdns.org/192.168.0.200
+address=/pihole/192.168.0.200
+
 # Media Servers
+address=/asf.local/192.168.0.199
+address=/asf.ackis.duckdns.org/192.168.0.199
+address=/asf/192.168.0.199
+
 address=/calibre.ackis.duckdns.org/192.168.0.199
 address=/calibre/192.168.0.199
 address=/calibre.local/192.168.0.199
@@ -60,53 +71,77 @@ address=/nextcloud/192.168.0.199
 address=/nextcloud.local/192.168.0.199
 
 address=/ombi.ackis.duckdns.org/192.168.0.199
+address=/ombi.local/192.168.0.199
+address=/ombi/192.168.0.199
 
 address=/plex.ackis.duckdns.org/192.168.0.199
 
 address=/plexpy.ackis.duckdns.org/192.168.0.199
+address=/plexpy.local/192.168.0.199
+address=/plexpy/192.168.0.199
 
 address=/plexwebtools.ackis.duckdns.org/192.168.0.199
+address=/plexwebtools.local/192.168.0.199
+address=/plexwebtools/192.168.0.199
 
 address=/radarr.ackis.duckdns.org/192.168.0.199
+address=/radarr.local/192.168.0.199
+address=/radarr/192.168.0.199
 
 address=/sabnzbd.ackis.duckdns.org/192.168.0.199
+address=/sabnzbd.local/192.168.0.199
+address=/sabnzbd/192.168.0.199
 
 address=/sonarr.ackis.duckdns.org/192.168.0.199
+address=/sonarr.local/192.168.0.199
+address=/sonarr/192.168.0.199
 
 address=/transmission.ackis.duckdns.org/192.168.0.199
+address=/transmission.local/192.168.0.199
+address=/transmission/192.168.0.199
 
 address=/ubooquity.ackis.duckdns.org/192.168.0.199
+address=/ubooquity.local/192.168.0.199
+address=/ubooquity/192.168.0.199
 
 address=/ubooquityadmin.ackis.duckdns.org/192.168.0.199
+address=/ubooquityadmin.local/192.168.0.199
+address=/ubooquityadmin/192.168.0.199
 
 address=/znc.ackis.duckdns.org/192.168.0.199
-
-address=/zoneminder.ackis.duckdns.org/192.168.0.199
-
-address=/organizr.ackis.duckdns.org/192.168.0.199
+address=/znc.local/192.168.0.199
+address=/znc/192.168.0.199
 
 # Admin Serviers
 address=/loganalyzer.ackis.duckdns.org/192.168.0.199
+address=/loganalyzer.local/192.168.0.199
+address=/loganalyzer/192.168.0.199
+
 address=/glances.ackis.duckdns.org/192.168.0.199
+address=/glances.local/192.168.0.199
+address=/glances/192.168.0.199
+
 address=/webmin.ackis.duckdns.org/192.168.0.199
+address=/webmin.local/192.168.0.199
+address=/webmin/192.168.0.199
 
 # IP Cams
 # Monoprice Cam
 address=/ipcam1.ackis.duckdns.org/192.168.0.150
-address=/ipcam1wifi.ackis.duckdns.org/192.168.0.151
 address=/ipcam1.local/192.168.0.150
+address=/ipcam1wifi.ackis.duckdns.org/192.168.0.151
 address=/ipcam1wifi.local/192.168.0.151
 
 # D-Link Cam - Living Room
 address=/ipcam2.ackis.duckdns.org/192.168.0.152
-address=/ipcam2wifi.ackis.duckdns.org/192.168.0.153
 address=/ipcam2.local/192.168.0.152
+address=/ipcam2wifi.ackis.duckdns.org/192.168.0.153
 address=/ipcam2wifi.local/192.168.0.153
 
 # D-Link Cam - Kitchen
 address=/ipcam3.ackis.duckdns.org/192.168.0.154
-address=/ipcam3wifi.ackis.duckdns.org/192.168.0.155
 address=/ipcam3.local/192.168.0.154
+address=/ipcam3wifi.ackis.duckdns.org/192.168.0.155
 address=/ipcam3wifi.local/192.168.0.155
 
 # Routers
@@ -116,6 +151,3 @@ address=/router.local/192.168.0.1
 address=/starbound.ackis.duckdns.org/192.168.0.199
 address=/minecraft.ackis.duckdns.org/192.168.0.199
 address=/ark.ackis.duckdns.org/192.168.0.199
-
-address=/asf.local/192.168.0.199
-address=/asf.ackis.duckdns.org/192.168.0.199
