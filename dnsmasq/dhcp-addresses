@@ -1,0 +1,66 @@
+# DHCP Address Reservations
+
+# PC Address Range: 10 - 20
+dhcp-host=john,192.168.0.10
+#78:24:af:47:81:71
+#78:24:af:d9:d6:b5
+dhcp-host=chantelle,192.168.0.11
+# Laptop wired
+
+# Ad hoc DHCP Range: 21-40
+
+# Wireless Range: 41-70
+dhcp-host=80:3f:5d:22:38:e9,ubuntuwifi,192.168.0.41
+dhcp-host=80:1f:02:9b:de:66,johnwifi,192.168.0.42
+dhcp-host=00:9A:90:00:2F:20,chantellewifi,192.168.0.43
+# Laptop wireless
+
+# Game Consoles: 71-80
+# Xbox One
+dhcp-host=28:18:78:89:EC:11,xboxone1,192.168.0.75
+dhcp-host=4c:0b:be:77:67:b0,xboxone2,192.168.0.76
+# X360
+# PS3
+# Wii U
+# Vita
+# 3DS1
+# 3DS2
+
+# Mobile Devices: 81-99
+# Tablet - iPad
+dhcp-host=20:7d:74:5a:76:7a,ipad,192.168.0.81
+
+# Network Devices
+
+# Routers
+dhcp-host=84:1B:5E:3A:DB:77,router,192.168.0.1
+
+# Printers
+#dhcp-host=DC:85:DE:6D:0D:BF,mf4890,192.168.0.101
+dhcp-host=2C:9E:FC:5C:A2:A9,mf4890,192.168.0.101
+dhcp-host=80:3F:5D:08:E0:2A,usbprint,192.168.0.102
+
+# Media Devices
+
+dhcp-host=00:18:DD:03:B4:82,hdhr3,192.168.0.103
+dhcp-host=00:18:DD:05:31:BA,hdhrextend,192.168.0.104
+dhcp-host=9C:AD:EF:60:06:C5,obi200,192.168.0.105
+dhcp-host=00:05:cd:90:b4:db,denon,192.168.0.106
+dhcp-host=D0:E7:82:B9:B5:CF,chromecast,192.168.0.110
+
+# IP Cams
+
+# Monoprice Cam
+dhcp-host=00:1B:C7:02:1B:4F,ipcam1,192.168.0.150
+dhcp-host=00:1B:C7:FF:D2:79,ipcam1wifi,192.168.0.151
+
+# D-Link Cam - Living Room
+dhcp-host=B0:C5:54:14:D4:60,ipcam2,192.168.0.152
+#,ipcam2wifi,192.168.0.153
+
+# D-Link Cam - Kitchen
+dhcp-host=B0:C5:54:1F:37:DC,ipcam3,192.168.0.154
+#dhcp-host=,ipcam3wifi,192.168.0.155
+
+# Servers
+dhcp-host=30:9C:23:B6:12:39,ubuntu,192.168.0.199
