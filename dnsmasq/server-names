@@ -1,0 +1,121 @@
+# LAN Name Resolution
+address=/.local/192.168.0.199/
+address=/.dev/192.168.0.199/
+address=/pasula-ubuntu/192.168.0.199/
+address=/pasula-dns-pi/192.168.0.200/
+
+# Web servers
+address=/home.ackis.duckdns.org/192.168.0.199
+address=/ackis.duckdns.org/192.168.0.199
+
+# Media Streaming Related
+address=/hdhr3.local/192.168.0.103
+address=/hdhr3/192.168.0.103
+address=/hdhr3.ackis.duckdns.org/192.168.0.103
+
+address=/hdhrextend.local/192.168.0.104
+address=/hdhrextend.ackis.duckdns.org/192.168.0.104
+address=/hdhrextend/192.168.0.104
+
+address=/obi200.local/192.168.0.105
+address=/obi200.ackis.duckdns.org/192.168.0.105
+address=/obi200/192.168.0.105
+
+address=/denon.local/192.168.0.106
+address=/denon.ackis.duckdns.org/192.168.0.106
+address=/denon/192.168.0.106
+
+address=/chromecast.local/192.168.0.110
+address=/chromecast.ackis.duckdns.org/192.168.0.110
+address=/chromecast/192.168.0.110
+
+# LAN Servers
+address=/mail.local/192.168.0.199
+address=/mail.ackis.duckdns.org/192.168.0.199
+address=/mail/192.168.0.199
+
+address=/ntp.local/192.168.0.199
+address=/ntp.ackis.duckdns.org/192.168.0.199
+address=/ntp/192.168.0.199
+
+# Media Servers
+address=/calibre.ackis.duckdns.org/192.168.0.199
+address=/calibre/192.168.0.199
+address=/calibre.local/192.168.0.199
+
+address=/datacrow.ackis.duckdns.org/192.168.0.199
+address=/datacrow/192.168.0.199
+address=/datacrow.local/192.168.0.199
+
+address=/headphones.ackis.duckdns.org/192.168.0.199
+address=/headphones/192.168.0.199
+address=/headphones.local/192.168.0.199
+
+address=/mylar.ackis.duckdns.org/192.168.0.199
+address=/mylar/192.168.0.199
+address=/mylar.local/192.168.0.199
+
+address=/nextcloud.ackis.duckdns.org/192.168.0.199
+address=/nextcloud/192.168.0.199
+address=/nextcloud.local/192.168.0.199
+
+address=/ombi.ackis.duckdns.org/192.168.0.199
+
+address=/plex.ackis.duckdns.org/192.168.0.199
+
+address=/plexpy.ackis.duckdns.org/192.168.0.199
+
+address=/plexwebtools.ackis.duckdns.org/192.168.0.199
+
+address=/radarr.ackis.duckdns.org/192.168.0.199
+
+address=/sabnzbd.ackis.duckdns.org/192.168.0.199
+
+address=/sonarr.ackis.duckdns.org/192.168.0.199
+
+address=/transmission.ackis.duckdns.org/192.168.0.199
+
+address=/ubooquity.ackis.duckdns.org/192.168.0.199
+
+address=/ubooquityadmin.ackis.duckdns.org/192.168.0.199
+
+address=/znc.ackis.duckdns.org/192.168.0.199
+
+address=/zoneminder.ackis.duckdns.org/192.168.0.199
+
+address=/organizr.ackis.duckdns.org/192.168.0.199
+
+# Admin Serviers
+address=/loganalyzer.ackis.duckdns.org/192.168.0.199
+address=/glances.ackis.duckdns.org/192.168.0.199
+address=/webmin.ackis.duckdns.org/192.168.0.199
+
+# IP Cams
+# Monoprice Cam
+address=/ipcam1.ackis.duckdns.org/192.168.0.150
+address=/ipcam1wifi.ackis.duckdns.org/192.168.0.151
+address=/ipcam1.local/192.168.0.150
+address=/ipcam1wifi.local/192.168.0.151
+
+# D-Link Cam - Living Room
+address=/ipcam2.ackis.duckdns.org/192.168.0.152
+address=/ipcam2wifi.ackis.duckdns.org/192.168.0.153
+address=/ipcam2.local/192.168.0.152
+address=/ipcam2wifi.local/192.168.0.153
+
+# D-Link Cam - Kitchen
+address=/ipcam3.ackis.duckdns.org/192.168.0.154
+address=/ipcam3wifi.ackis.duckdns.org/192.168.0.155
+address=/ipcam3.local/192.168.0.154
+address=/ipcam3wifi.local/192.168.0.155
+
+# Routers
+address=/router.local/192.168.0.1
+
+# Games
+address=/starbound.ackis.duckdns.org/192.168.0.199
+address=/minecraft.ackis.duckdns.org/192.168.0.199
+address=/ark.ackis.duckdns.org/192.168.0.199
+
+address=/asf.local/192.168.0.199
+address=/asf.ackis.duckdns.org/192.168.0.199
