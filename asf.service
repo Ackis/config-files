@@ -1,0 +1,15 @@
+[Unit]
+Description=ArchiSteamFarm
+After=network-online.target syslog.target network.target
+
+[Service]
+Type=simple
+User=archisteamfarm
+EnvironmentFile=/etc/environment
+ExecStart=/opt/ArchiSteamFarm/ArchiSteamFarm --cryptkey=TBD --server
+Restart=on-success
+RestartSec=15s
+
+[Install]
+WantedBy=multi-user.target
+Alias=asf.service
