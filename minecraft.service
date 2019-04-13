@@ -6,17 +6,10 @@ Description=Minecraft Bedrock Edition server
 [Service]
 ExecStart=/bin/sh -c "./bedrock_server"
 TimeoutStopSec=20
-Type=simple
+Type=forking
 WorkingDirectory=/opt/minecraft/server/
-#PrivateUsers=true
-#ProtectHome=true
-#ProtectControlGroups=true
-#ProtectKernelModules=true
-#ProtectKernelTunables=true
-#ProtectSystem=full
 User=minecraft
 Group=minecraft
-#WorkingDirectory=/opt/MC/%i
 
 [Install]
 WantedBy=multi-user.target
