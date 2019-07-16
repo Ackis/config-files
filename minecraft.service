@@ -4,7 +4,7 @@ Before=shutdown.target
 Description=Minecraft Bedrock Edition server
 
 [Service]
-ExecStart=/bin/sh -c "./bedrock_server"
+ExecStart=/bin/bash -c "LD_LIBRARY_PATH=. ./bedrock_server"
 TimeoutStopSec=20
 Type=forking
 WorkingDirectory=/opt/minecraft/server/
