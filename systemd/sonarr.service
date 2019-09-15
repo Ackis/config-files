@@ -6,9 +6,7 @@ After=network.target network-online.target
 [Service]
 User=sonarr
 Group=sonarr
-
 StandardOutput=null
-
 Type=simple
 ExecStart=/usr/bin/mono /opt/NzbDrone/NzbDrone.exe -nobrowser
 TimeoutStopSec=20
