@@ -1,0 +1,17 @@
+server {
+	listen					80 default;
+	listen					[::]:80;
+	listen					443;
+	listen					[::]:443 ssl;
+
+	location / {
+		return					301 https://ackis.duckdns.org;
+	}
+
+	server_name				"";
+	return					444;
+
+	access_log				syslog:server=localhost,tag=nginx_access_undefined,severity=info;
+	error_log				syslog:server=localhost,tag=nginx_error_undefined,severity=error;
+}
+

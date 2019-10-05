@@ -1,0 +1,64 @@
+server {
+        listen                          80;
+        server_name                     zoneminder.ackis.duckdns.org;
+        return 301                      https://$server_name$request_uri;
+
+        access_log                      syslog:server=localhost,tag=nginx_access_zoneminder,severity=info combined;
+        error_log                       syslog:server=localhost,tag=nginx_error_zoneminder;
+}
+
+
+server {
+        listen                          443 ssl;
+        server_name                     zoneminder.ackis.duckdns.org;
+        ssl_certificate                 /etc/letsencrypt/live/zoneminder.ackis.duckdns.org/fullchain.pem; # mana$
+        ssl_certificate_key             /etc/letsencrypt/live/zoneminder.ackis.duckdns.org/privkey.pem; # manage$
+
+        ssl_stapling                    on;
+        ssl_stapling_verify             on;
+        server_tokens                   off;
+
+#        add_header                      Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+#        add_header                      X-Frame-Options SAMEORIGIN;
+#	add_header                      X-Content-Type-Options nosniff;
+#        add_header                      X-XSS-Protection "1; mode=block";
+#        add_header                      Content-Security-Policy "default-src 'self'";
+
+        include                         /etc/nginx/conf.d/include.whitelist;
+
+	location / {
+		return			403;
+	}
+
+	location /zm/cgi-bin {
+		gzip			off;
+		alias			/usr/lib/zoneminder/cgi-bin;
+		include			/etc/nginx/fastcgi_params;
+		fastcgi_param		SCRIPT_FILENAME $request_filename;
+		fastcgi_pass		unix:/var/run/fcgiwrap.socket;
+	}
+
+	location /zm {
+		gzip			off;
+		alias			/usr/share/zoneminder/www;
+		index			index.php;
+
+		location ~ \.php$ {
+			if (!-f $request_filename) { return 404; }
+			expires		epoch;
+			include		/etc/nginx/fastcgi_params;
+			fastcgi_param	SCRIPT_FILENAME $request_filename;
+			fastcgi_index	index.php;
+			fastcgi_pass	unix:/var/run/php/php7.2-fpm.sock;
+		}
+
+		location ~ \.(jpg|jpeg|gif|png|ico)$ {
+			access_log	off;
+			expires		33d;
+		}
+
+		location /zm/cache {
+			alias /var/cache/zoneminder/cache;
+		}
+	}
+}

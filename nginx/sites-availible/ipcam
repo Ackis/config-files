@@ -1,0 +1,41 @@
+server {
+	listen 80;
+	server_name ipcam2.local;
+
+	location / {
+		proxy_pass http://192.168.0.152:65000/;
+		proxy_redirect http://192.168.0.152:65000/ /;
+		proxy_set_header X-Forwarded-Proto http;
+
+		access_log /var/log/nginx/sites/ipcams/ipcam2.access.log;
+		error_log /var/log/nginx/sites/ipcams/ipcam2.error.log;
+	}
+}
+
+server {
+	listen 80;
+	server_name ipcam2wifi.local;
+
+	location / {
+		proxy_pass http://192.168.0.153:65000/;
+		proxy_redirect http://192.168.0.153:65000/ /;
+		proxy_set_header X-Forwarded-Proto http;
+
+		access_log /var/log/nginx/sites/ipcams/ipcam2wifi.access.log;
+		error_log /var/log/nginx/sites/ipcams/ipcam2wifi.error.log;
+	}
+}
+
+server {
+	listen 80;
+	server_name ipcam3.local;
+
+	location / {
+		proxy_pass http://192.168.0.154:65000/;
+		proxy_redirect http://192.168.0.154:65000/ /;
+		proxy_set_header X-Forwarded-Proto http;
+
+		access_log /var/log/nginx/sites/ipcams/ipcam3.access.log;
+		error_log /var/log/nginx/sites/ipcams/ipcam3.error.log;
+	}
+}

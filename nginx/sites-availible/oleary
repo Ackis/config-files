@@ -1,0 +1,23 @@
+upstream oleary {
+	server 192.168.0.199;
+	keepalive 512;
+}
+
+server {
+	listen 80;
+	server_name			oleary.ackis.duckdns.org;
+	return 301			https://$server_name$request_uri;
+}
+
+
+server {
+	listen				443 ssl;
+	server_name			oleary.ackis.duckdns.org;
+	ssl_certificate /etc/letsencrypt/live/oleary.ackis.duckdns.org/fullchain.pem; # managed by Certbot
+	ssl_certificate_key /etc/letsencrypt/live/oleary.ackis.duckdns.org/privkey.pem; # managed by Certbot
+
+	return 301                      https://google.ca;
+
+#	include				/etc/nginx/conf.d/include.whitelist;
+
+}

@@ -1,0 +1,21 @@
+upstream plex {
+	server 192.168.0.199:8181;
+	keepalive 512;
+}
+
+server {
+	listen				80;
+	server_name			plex.ackis.duckdns.org;
+	return 301			https://plex.tv;
+}
+
+server {
+	listen				443 ssl;
+	server_name			plex.ackis.duckdns.org;
+	return 301			https://plex.tv;
+	ssl_certificate			/etc/letsencrypt/live/plex.ackis.duckdns.org/fullchain.pem;
+	ssl_certificate_key		/etc/letsencrypt/live/plex.ackis.duckdns.org/privkey.pem;
+
+#	include				/etc/nginx/conf.d/include.whitelist;
+}
+	

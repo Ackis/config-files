@@ -1,0 +1,78 @@
+server {
+	listen 80;
+	server_name			channydraws-dev.ackis.duckdns.org;
+	location / {
+		return 301			https://$server_name$request_uri;
+	}
+
+	access_log			syslog:server=localhost,tag=nginx_access_channydraws,severity=info combined;
+	error_log			syslog:server=localhost,tag=nginx_error_channydraws;
+}
+
+
+server {
+	listen				443 ssl;
+	server_name			channydraws-dev.ackis.duckdns.org;
+    ssl_certificate /etc/letsencrypt/live/channydraws-dev.ackis.duckdns.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/channydraws-dev.ackis.duckdns.org/privkey.pem; # managed by Certbot
+
+	ssl_stapling			on;
+	ssl_stapling_verify		on;
+	server_tokens			off;
+
+	add_header			Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+	add_header			X-Frame-Options SAMEORIGIN;
+	add_header			X-Content-Type-Options nosniff;
+	add_header			X-XSS-Protection "1; mode=block";
+	add_header			Content-Security-Policy "default-src 'self'; script-src 'self' *.twitter.com 'sha256-6wRdeNJzEHNIsDAMAdKbdVLWIqu8b6+Bs+xVNZqplQw='; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self' *.twitter.com; connect-src 'self' https://apis.google.com; object-src 'self' ";
+
+	root				/var/www/channydraws-dev;
+
+	include				/etc/nginx/conf.d/include.whitelist;
+
+	location / {
+		index			index.html index.htm;
+
+		access_log		syslog:server=localhost,tag=nginx_access_channydraws,severity=info combined;
+		error_log		syslog:server=localhost,tag=nginx_error_channydraws;
+	}
+
+	location = /favicon.ico {
+		access_log		off;
+		log_not_found		off;
+	}
+
+	location = /.well-known/acme-challenge/ {
+		return			404;
+	}
+
+	location ~* /\.\./ {
+		deny			all;
+		return			404;
+	}
+
+	location /cgi-bin {
+		gzip			off;
+		include			fastcgi_params;
+		fastcgi_param		SCRIPT_FILENAME $request_filename;
+		fastcgi_pass		unix:/var/run/php/php7.2-fpm.sock;
+	}
+
+	location ~ /.*\.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_intercept_errors	on;
+		fastcgi_pass			unix:/var/run/php/php7.2-fpm.sock;
+		include				/etc/nginx/conf.d/fastcgi.conf;
+	}
+
+	location /nginx_status {
+		auth_basic			"Restricted access";
+		auth_basic_user_file		/etc/nginx/auth/admin.htpasswd;
+		stub_status			on;
+
+		access_log			syslog:server=localhost,tag=nginx_access_admin,severity=info combined;
+		error_log			syslog:server=localhost,tag=nginx_error_admin;
+	}
+
+
+}

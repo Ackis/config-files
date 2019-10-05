@@ -1,0 +1,119 @@
+upstream ubooquity {
+	server					192.168.0.199:8082;
+	keepalive				512;
+}
+
+server {
+	listen					80;
+	server_name				ubooquity.ackis.duckdns.org;
+	return					301 https://$server_name$request_uri;
+
+	access_log				syslog:server=localhost,tag=nginx_access_ubooquity,severity=info combined;
+	error_log				syslog:server=localhost,tag=nginx_error_ubooquity;
+}
+
+server {
+	listen					443 ssl;
+	server_name				ubooquity.ackis.duckdns.org;
+
+	access_log				syslog:server=localhost,tag=nginx_access_ubooquity,severity=info combined;
+	error_log				syslog:server=localhost,tag=nginx_error_ubooquity;
+
+	ssl_certificate			/etc/letsencrypt/live/ubooquity.ackis.duckdns.org/fullchain.pem;
+	ssl_certificate_key		/etc/letsencrypt/live/ubooquity.ackis.duckdns.org/privkey.pem;
+
+	ssl_stapling			on;
+	ssl_stapling_verify		on;
+	server_tokens			off;
+
+	add_header				Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+	add_header				X-Frame-Options SAMEORIGIN;
+	add_header				X-Content-Type-Options nosniff;
+	add_header				X-XSS-Protection "1; mode=block";
+
+	include					/etc/nginx/conf.d/include.whitelist;
+
+	location = /.well-known/acme-challenge/ {
+		return				404;
+	}
+
+	location ~* /\.\./ {
+		deny				all;
+		return				404;
+	}
+
+	location ~* "^(?:.+\.(?:htaccess|make|txt|test|markdown|md|engine|inc|info|install|module|profile|po|sh|.*sql|theme|tpl(?:\.php)?|xtmpl)|code-style\.pl|/Entries.*|/Repository|/Root|/Tag|/Template|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save))$" {
+		return				404;
+	}
+
+	location = /favicon.ico {
+		try_files			/favicon.ico =204;
+	}
+
+	location / {
+		proxy_pass			http://192.168.0.199:8082/;
+		proxy_redirect			http://192.168.0.199:8082/ /;
+		proxy_set_header		X-Forwarded-Proto https;
+		include				/etc/nginx/conf.d/proxy.conf;
+	}
+
+	error_page			502 /502.html;
+
+        
+	location = /502.html {
+		root			/var/www/error_pages/;
+	}
+}
+
+server {
+	listen					443 ssl;
+	server_name				ubooquityadmin.ackis.duckdns.org;
+
+	access_log				syslog:server=localhost,tag=nginx_access_ubooquity,severity=info combined;
+	error_log				syslog:server=localhost,tag=nginx_error_ubooquity;
+    ssl_certificate /etc/letsencrypt/live/ubooquityadmin.ackis.duckdns.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ubooquityadmin.ackis.duckdns.org/privkey.pem; # managed by Certbot
+
+	ssl_stapling			on;
+	ssl_stapling_verify		on;
+	server_tokens			off;
+
+	add_header				Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+	add_header				X-Frame-Options SAMEORIGIN;
+	add_header				X-Content-Type-Options nosniff;
+	add_header				X-XSS-Protection "1; mode=block";
+
+	include					/etc/nginx/conf.d/include.whitelist;
+
+	location = /.well-known/acme-challenge/ {
+		return				404;
+	}
+
+	location ~* /\.\./ {
+		deny				all;
+		return				404;
+	}
+
+	location ~* "^(?:.+\.(?:htaccess|make|txt|test|markdown|md|engine|inc|info|install|module|profile|po|sh|.*sql|theme|tpl(?:\.php)?|xtmpl)|code-style\.pl|/Entries.*|/Repository|/Root|/Tag|/Template|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save))$" {
+		return				404;
+	}
+
+	location = /favicon.ico {
+		try_files			/favicon.ico =204;
+	}
+
+	location / {
+		proxy_pass			http://192.168.0.199:8083/;
+		proxy_redirect		http://192.168.0.199:8083/ /;
+		proxy_set_header	X-Forwarded-Proto https;
+		include				/etc/nginx/conf.d/proxy.conf;
+	}
+
+	error_page			502 /502.html;
+        
+	location = /502.html {
+		root			/var/www/error_pages/;
+	}
+
+
+}

@@ -1,0 +1,41 @@
+upstream plexpy {
+	server 192.168.0.199:8181;
+	keepalive 512;
+}
+
+server {
+	listen				80;
+	server_name			plexpy.ackis.duckdns.org;
+	return				301 https://$server_name$request_uri;
+
+	access_log			syslog:server=localhost,tag=nginx_access_plexpy,severity=info combined;
+	error_log			syslog:server=localhost,tag=nginx_error_plexpy;
+}
+
+server {
+	listen				443 ssl;
+	server_name			plexpy.ackis.duckdns.org;
+	ssl_certificate			/etc/letsencrypt/live/plex.ackis.duckdns.org/fullchain.pem; # managed by Certbot
+	ssl_certificate_key		/etc/letsencrypt/live/plex.ackis.duckdns.org/privkey.pem; # managed by Certbot
+
+	add_header			Strict-Transport-Security "max-age=86400; includeSubdomains; preload";
+
+	include				/etc/nginx/conf.d/include.whitelist;
+
+	access_log			syslog:server=localhost,tag=nginx_access_plexpy,severity=info combined;
+	error_log			syslog:server=localhost,tag=nginx_error_plexpy;
+
+	location / {
+		proxy_pass		http://192.168.0.199:8181/;
+		proxy_redirect		http://192.168.0.199:8181/home/ /;
+		proxy_set_header	X-Forwarded-Proto https;
+		include			/etc/nginx/conf.d/proxy.conf;
+	}
+
+	error_page			502 /502.html;
+
+	location = /502.html {
+	      root			/var/www/error_pages/;
+	}
+
+}

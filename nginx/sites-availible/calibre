@@ -1,0 +1,62 @@
+upstream calibre {
+	server			192.168.0.199:8080;
+	keepalive		512;
+}
+
+server {
+	listen			80;
+	server_name		calibre.ackis.duckdns.org;
+
+	location / {
+		return 301	https://$server_name$request_uri;
+	}
+
+        # Workaround LE and certbot not working with nginx
+	location /.well-known/acme-challenge/ {
+		root		/var/www/letsencrypt;
+	}
+
+	access_log		syslog:server=localhost,tag=nginx_access_calibre,severity=info combined;
+	error_log		syslog:server=localhost,tag=nginx_error_calibre;
+}
+
+server {
+	listen			443 ssl;
+	server_name		calibre.ackis.duckdns.org;
+
+	access_log		syslog:server=localhost,tag=nginx_access_calibre,severity=info combined;
+	error_log		syslog:server=localhost,tag=nginx_error_calibre;
+
+	ssl_certificate		/etc/letsencrypt/live/calibre.ackis.duckdns.org/fullchain.pem; # managed by Certbot
+	ssl_certificate_key	/etc/letsencrypt/live/calibre.ackis.duckdns.org/privkey.pem; # managed by Certbot
+
+	include			/etc/nginx/conf.d/headers.conf;
+
+	include			/etc/nginx/conf.d/include.whitelist;
+
+	location = /.well-known/acme-challenge/ {
+		return		404;
+	}
+
+	location ~* /\.\./ {
+		deny		all;
+		return		404;
+	}
+
+	location ~* "^(?:.+\.(?:htaccess|make|txt|test|markdown|md|engine|inc|info|install|module|profile|po|sh|.*sql|theme|tpl(?:\.php)?|xtmpl)|code-style\.pl|/Entries.*|/Repository|/Root|/Tag|/Template|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save))$" {
+		return		404;
+	}
+
+	location = /favicon.ico {
+		try_files	/favicon.ico =204;
+	}
+
+	location / {
+
+		include		/etc/nginx/conf.d/proxy.conf;
+
+		proxy_pass	http://192.168.0.199:8080;
+		proxy_redirect	http://192.168.0.199:3000/ /;
+
+	}
+}
