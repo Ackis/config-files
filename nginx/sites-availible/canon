@@ -1,6 +1,6 @@
 server {
-	listen					80;
-	server_name				canon.ackis.duckdns.org;
+	listen			80;
+	server_name		canon.ackis.duckdns.org;
 
 	location / {
 		return 301	https://$server_name$request_uri;
@@ -11,50 +11,47 @@ server {
 		root		/var/www/letsencrypt;
 	}
 
-	access_log				syslog:server=localhost,tag=nginx_access_canon,severity=info combined;
-	error_log				syslog:server=localhost,tag=nginx_error_canon;
+	access_log		syslog:server=localhost,tag=nginx_access_canon,severity=info combined;
+	error_log		syslog:server=localhost,tag=nginx_error_canon;
 }
 
 server {
-	listen					443;
-	server_name				canon.ackis.duckdns.org;
+	listen			443;
+	server_name		canon.ackis.duckdns.org;
 
-	access_log				syslog:server=localhost,tag=nginx_access_canon,severity=info combined;
-	error_log				syslog:server=localhost,tag=nginx_error_canon;
-	ssl_certificate /etc/letsencrypt/live/canon.ackis.duckdns.org/fullchain.pem; # managed by Certbot
-	ssl_certificate_key /etc/letsencrypt/live/canon.ackis.duckdns.org/privkey.pem; # managed by Certbot
+	access_log		syslog:server=localhost,tag=nginx_access_canon,severity=info combined;
+	error_log		syslog:server=localhost,tag=nginx_error_canon;
 
-	server_tokens				off;
+	ssl_certificate		/etc/letsencrypt/live/canon.ackis.duckdns.org/fullchain.pem; # managed by Certbot
+	ssl_certificate_key	/etc/letsencrypt/live/canon.ackis.duckdns.org/privkey.pem; # managed by Certbot
 
-	add_header				Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
-	add_header				X-Frame-Options SAMEORIGIN;
-	add_header				X-Content-Type-Options nosniff;
-	add_header				X-XSS-Protection "1; mode=block";
+	include			/etc/nginx/conf.d/headers.conf;
 
-	include					/etc/nginx/conf.d/include.whitelist;
+	include			/etc/nginx/conf.d/include.whitelist;
 
 	location = /.well-known/acme-challenge/ {
-		return				404;
+		return		404;
 	}
 
 	location ~* /\.\./ {
-		deny				all;
-		return				404;
+		deny		all;
+		return		404;
 	}
 
 	location ~* "^(?:.+\.(?:htaccess|make|txt|test|markdown|md|engine|inc|info|install|module|profile|po|sh|.*sql|theme|tpl(?:\.php)?|xtmpl)|code-style\.pl|/Entries.*|/Repository|/Root|/Tag|/Template|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save))$" {
-		return				404;
+		return		404;
 	}
 
 	location = /favicon.ico {
-		try_files			/favicon.ico =204;
+		try_files	/favicon.ico =204;
 	}
 
 	location / {
-		proxy_pass			http://192.168.0.101/;
-		proxy_redirect			http://192.168.0.101/ /;
-		proxy_set_header		X-Forwarded-Proto http;
-		include				/etc/nginx/conf.d/proxy.conf;
+		#proxy_pass	http://192.168.0.101/;
+		#proxy_redirect	http://192.168.0.101/ /;
+		proxy_pass	http://192.168.0.101;
+		#proxy_set_header X-Forwarded-Proto http;
+		include		/etc/nginx/conf.d/proxy.conf;
 	}
 
 
