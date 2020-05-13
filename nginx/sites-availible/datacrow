@@ -6,16 +6,21 @@ upstream datacrow {
 server {
 	listen					80;
 	server_name				datacrow.ackis.duckdns.org;
+
 	location / {
 		return					301 https://$server_name$request_uri;
 	}
+
+location /.well-known/acme-challenge/ {
+root /var/www/letsencrypt;
+}
 
 	access_log				syslog:server=localhost,tag=nginx_access_datacrow,severity=info combined;
 	error_log				syslog:server=localhost,tag=nginx_error_datacrow;
 }
 
 server {
-	listen					443 ssl;
+	listen					443 http2 ssl;
 	server_name				datacrow.ackis.duckdns.org;
 
 	access_log				syslog:server=localhost,tag=nginx_access_datacrow,severity=info combined;

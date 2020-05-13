@@ -16,7 +16,7 @@ server {
 }
 
 server {
-	listen			443;
+	listen			443 ssl;
 	server_name		canon.ackis.duckdns.org;
 
 	access_log		syslog:server=localhost,tag=nginx_access_canon,severity=info combined;
@@ -47,10 +47,7 @@ server {
 	}
 
 	location / {
-		#proxy_pass	http://192.168.0.101/;
-		#proxy_redirect	http://192.168.0.101/ /;
 		proxy_pass	http://192.168.0.101;
-		#proxy_set_header X-Forwarded-Proto http;
 		include		/etc/nginx/conf.d/proxy.conf;
 	}
 

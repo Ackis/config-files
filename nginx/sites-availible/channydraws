@@ -1,6 +1,8 @@
+# HTTP server - redirect to HTTPS
 server {
 	listen			80;
-	server_name		channydraws.com channydraws.ackis.duckdns.org;
+#	listen			[::]:80;
+	server_name		www.channydraws.com channydraws.com channydraws.ackis.duckdns.org;
 
 	location / {
 		return 301	https://$server_name$request_uri;
@@ -15,12 +17,19 @@ server {
 	error_log		syslog:server=localhost,tag=nginx_error_channydraws;
 }
 
+# www domain - redirect to domain without www
 server {
 	listen			443 ssl;
+#	listen			[::]:443 ssl;
 	server_name		www.channydraws.com;
 
 	location / {
 		return 301	https://channydraws.com;
+	}
+
+	# Workaround LE and certbot not working with nginx
+	location /.well-known/acme-challenge/ {
+		root		/var/www/letsencrypt;
 	}
 
 	access_log		syslog:server=localhost,tag=nginx_access_channydraws,severity=info combined;
@@ -32,7 +41,8 @@ server {
 
 server {
 	listen			443 ssl;
-	server_name		channydraws.com channydraws.ackis.duckdns.org;
+#	listen			[::]:443 ssl;
+	server_name		channydraws.com;
 
 	ssl_certificate		/etc/letsencrypt/live/channydraws.com/fullchain.pem; # managed by Certbot
 	ssl_certificate_key	/etc/letsencrypt/live/channydraws.com/privkey.pem; # managed by Certbot

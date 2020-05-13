@@ -16,7 +16,7 @@ server {
 }
 
 server {
-	listen			443 ssl;
+	listen			443 http2 ssl;
 	server_name		asf.ackis.duckdns.org;
 
 	access_log		syslog:server=localhost,tag=nginx_access_asf,severity=info combined;

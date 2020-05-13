@@ -6,14 +6,22 @@ upstream transmission {
 server {
 	listen					80;
 	server_name				transmission.ackis.duckdns.org;
+
+	location / {
 	return					301 https://$server_name$request_uri;
+	}
+
+location /.well-known/acme-challenge/ {
+root /var/www/letsencrypt;
+}
+
 
 	access_log				syslog:server=localhost,tag=nginx_access_transmission,severity=info combined;
 	error_log				syslog:server=localhost,tag=nginx_error_transmission;
 }
 
 server {
-	listen					443 ssl;
+	listen					443 http2 ssl;
 	server_name				transmission.ackis.duckdns.org;
 
 	access_log				syslog:server=localhost,tag=nginx_access_transmission,severity=info combined;
@@ -26,10 +34,7 @@ server {
 	ssl_stapling_verify		on;
 	server_tokens			off;
 
-	add_header				Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
-	add_header				X-Frame-Options SAMEORIGIN;
-	add_header				X-Content-Type-Options nosniff;
-	add_header				X-XSS-Protection "1; mode=block";
+	include					/etc/nginx/conf.d/headers.conf;
 
 	include					/etc/nginx/conf.d/include.whitelist;
 

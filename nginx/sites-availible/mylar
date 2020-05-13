@@ -11,12 +11,17 @@ server {
 		return					301 https://$server_name$request_uri;
 	}
 
+location /.well-known/acme-challenge/ {
+root /var/www/letsencrypt;
+}
+
+
 	access_log				syslog:server=localhost,tag=nginx_access_mylar,severity=info combined;
 	error_log				syslog:server=localhost,tag=nginx_error_mylar;
 }
 
 server {
-	listen					443 ssl;
+	listen					443 http2 ssl;
 	server_name				mylar.ackis.duckdns.org;
 
 	access_log				syslog:server=localhost,tag=nginx_access_mylar,severity=info combined;

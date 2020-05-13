@@ -11,7 +11,7 @@ server {
 		return 301	https://$server_name$request_uri;
 	}
 
-        # Workaround LE and certbot not working with nginx
+	# Workaround LE and certbot not working with nginx
 	location /.well-known/acme-challenge/ {
 		root		/var/www/letsencrypt;
 	}
@@ -34,10 +34,6 @@ server {
 
 	include			/etc/nginx/conf.d/include.whitelist;
 
-	location = /.well-known/acme-challenge/ {
-		return		404;
-	}
-
 	location ~* /\.\./ {
 		deny		all;
 		return		404;
@@ -56,7 +52,6 @@ server {
 		include		/etc/nginx/conf.d/proxy.conf;
 
 		proxy_pass	http://192.168.0.199:8080;
-		proxy_redirect	http://192.168.0.199:3000/ /;
-
+		proxy_redirect	http://192.168.0.199:8080/ /;
 	}
 }

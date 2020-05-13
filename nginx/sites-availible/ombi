@@ -6,14 +6,20 @@ upstream ombi {
 server {
 	listen					80;
 	server_name				ombi.ackis.duckdns.org;
-	return					301 https://$server_name$request_uri;
+	location / {
+		return 301			https://$server_name$request_uri;
+	}
+
+	location /.well-known/acme-challenge/ {
+		root				/var/www/letsencrypt;
+	}
 
 	access_log				syslog:server=localhost,tag=nginx_access_ombi,severity=info combined;
 	error_log				syslog:server=localhost,tag=nginx_error_ombi;
 }
 
 server {
-	listen					443 ssl;
+	listen					443 http2 ssl;
 	server_name				ombi.ackis.duckdns.org;
 
 	access_log				syslog:server=localhost,tag=nginx_access_ombi,severity=info combined;

@@ -1,31 +1,25 @@
 # HTTP server - redirect to HTTPS
 server {
 	listen					80;
-	listen					[::]:80;
+#	listen					[::]:80;
 	server_name				www.ackis.duckdns.org ackis.duckdns.org;
 
 	location / {
 		return				301 https://ackis.duckdns.org$request_uri;
 	}
 
-	# Workaround LE and certbot not working with nginx
 	location /.well-known/acme-challenge/ {
-						root /var/www/letsencrypt;
+		root				/var/www/letsencrypt;
 	}
 
 	access_log				syslog:server=localhost,tag=nginx_access_internet,severity=info;
 	error_log				syslog:server=localhost,tag=nginx_error_internet;
-
-	add_header				Strict-Transport-Security "max-age=31536000;";
-	add_header				X-Frame-Options SAMEORIGIN;
-	add_header				X-Content-Type-Options nosniff;
-	add_header				X-XSS-Protection "1; mode=block";
 }
 
 # www domain - redirect to domain without www
 server {
-	listen					443 ssl;
-	listen					[::]:443 ssl;
+	listen					443 http2 ssl;
+#	listen					[::]:443 http2 ssl;
 	server_name				www.ackis.duckdns.org;
 
 	location / {
@@ -40,15 +34,12 @@ server {
 
 	etag					off;
 
-	add_header				Strict-Transport-Security "max-age=31536000;";
-	add_header				X-Frame-Options SAMEORIGIN;
-	add_header				X-Content-Type-Options nosniff;
-	add_header				X-XSS-Protection "1; mode=block";
+	include					/etc/nginx/conf.d/headers.conf;
 }
 
 server {
-	listen					443 ssl default_server;
-	listen					[::]:443 ssl;
+	listen					443 http2 ssl default_server;
+#	listen					[::]:443 http2 ssl;
 	server_name				ackis.duckdns.org;
 
 	access_log				syslog:server=localhost,tag=nginx_access_internet,severity=info;
@@ -57,13 +48,9 @@ server {
 	ssl_certificate				/etc/letsencrypt/live/ackis.duckdns.org/fullchain.pem; # managed by Certbot
 	ssl_certificate_key			/etc/letsencrypt/live/ackis.duckdns.org/privkey.pem; # managed by Certbot
 
-	server_tokens				off;
 	etag					off;
 
-	add_header				Strict-Transport-Security "max-age=31536000;";
-	add_header				X-Frame-Options SAMEORIGIN;
-	add_header				X-Content-Type-Options nosniff;
-	add_header				X-XSS-Protection "1; mode=block";
+	include					/etc/nginx/conf.d/headers.conf;
 
 	location ~* /\.\./ {
 		deny				all;
@@ -89,10 +76,9 @@ server {
 
 		include				/etc/nginx/conf.d/include.whitelist;
 
-		auth_basic			"Restricted access";
-		auth_basic_user_file		/etc/nginx/auth/admin.htpasswd;
+#		auth_basic			"Restricted access";
+#		auth_basic_user_file		/etc/nginx/auth/admin.htpasswd;
 
 		stub_status			on;
 	}
-
 }

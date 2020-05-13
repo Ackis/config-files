@@ -1,9 +1,14 @@
 server {
 	listen 80;
 	server_name			channydraws-dev.ackis.duckdns.org;
+
 	location / {
 		return 301			https://$server_name$request_uri;
 	}
+
+location /.well-known/acme-challenge/ {
+root /var/www/letsencrypt;
+}
 
 	access_log			syslog:server=localhost,tag=nginx_access_channydraws,severity=info combined;
 	error_log			syslog:server=localhost,tag=nginx_error_channydraws;
@@ -11,7 +16,7 @@ server {
 
 
 server {
-	listen				443 ssl;
+	listen				443 http2 ssl;
 	server_name			channydraws-dev.ackis.duckdns.org;
     ssl_certificate /etc/letsencrypt/live/channydraws-dev.ackis.duckdns.org/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/channydraws-dev.ackis.duckdns.org/privkey.pem; # managed by Certbot
