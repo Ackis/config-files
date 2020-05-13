@@ -6,7 +6,7 @@ After=network-online.target
 [Service]
 User=sabnzbd
 Group=sabnzbd
-ExecStart=/usr/bin/sabnzbdplus -f /home/sabnzbd/sabnzbd.ini -s 192.168.0.199:9090 --pid /var/run/sabnzbdplus/ -d -l 2
+ExecStart=/usr/bin/sabnzbdplus -f /home/sabnzbd/sabnzbd.ini -s 192.168.0.199:9090 --pid /var/run/ -d -l 2
 Type=forking
 
 [Install]
